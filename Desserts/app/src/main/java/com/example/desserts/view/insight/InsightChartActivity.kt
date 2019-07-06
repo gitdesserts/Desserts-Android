@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import com.example.desserts.R
 import com.example.desserts.api.ApiService
+import com.example.desserts.common.GlideApp
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
@@ -19,6 +20,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_insight_chart.*
+import kotlin.collections.ArrayList
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -31,6 +33,8 @@ class InsightChartActivity : AppCompatActivity() {
     private var xAxisData = arrayOf("월", "화", "수", "목", "금", "토", "일")
 
     private val compositeDisposable = CompositeDisposable()
+    private var year = 0
+    private var month = 0
 
     private var lastWeek = false
 
