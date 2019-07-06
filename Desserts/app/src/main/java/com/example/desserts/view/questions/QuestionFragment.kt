@@ -1,6 +1,7 @@
 package com.example.desserts.view.questions
 
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +25,7 @@ class QuestionFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_question, container, false)
-        view.questionTextView.text = questionText
+        view.questionTextView.text = Html.fromHtml(questionText)
 
         return view
     }
