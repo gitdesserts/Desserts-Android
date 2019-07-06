@@ -1,9 +1,6 @@
 package com.example.desserts.api
 
-import com.example.desserts.model.QuestionResponseModel
-import com.example.desserts.model.LoginModel
-import com.example.desserts.model.QuestionModel
-import com.example.desserts.model.WeekModel
+import com.example.desserts.model.*
 import io.reactivex.Observable
 import retrofit2.http.*
 
@@ -22,6 +19,9 @@ class ApiService {
 
         @GET("/results/week")
         fun requestWeekData(@Query("date") date: String): Observable<WeekModel>
+
+        @GET("/results/month")
+        fun requestMonthData(@Query("date") date: String): Observable<MonthModel>
     }
 
     companion object {
@@ -39,6 +39,10 @@ class ApiService {
 
         fun requestWeekData(data: String): Observable<WeekModel> {
             return ApiClient.create(ApiImpl::class.java).requestWeekData(data)
+        }
+
+        fun requestMonthData(date: String): Observable<MonthModel> {
+            return ApiClient.create(ApiImpl::class.java).requestMonthData(date)
         }
     }
 }
