@@ -6,7 +6,9 @@ buildscript {
     ext.gson_version = '2.3.0'
     repositories {
         google()
+        mavenCentral()
         jcenter()
+        maven { url 'https://jitpack.io' }
         
     }
     dependencies {
@@ -20,7 +22,9 @@ buildscript {
 allprojects {
     repositories {
         google()
+        mavenCentral()
         jcenter()
+        maven { url 'https://jitpack.io' }
         
     }
 }
