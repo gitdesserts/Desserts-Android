@@ -3,4 +3,6 @@
   
     <!-- Login Activity -->
     <string name="login_button_text">로그인</string>
+
+    <string name="skip_button"><u>Skip</u></string>
 </resources>
