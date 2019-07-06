@@ -1,21 +1,19 @@
 package com.example.desserts.api
 
-import com.example.desserts.model.DataModel
+import com.example.desserts.model.LoginModel
 import io.reactivex.Observable
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.POST
 
 class ApiService {
 
     interface ApiImpl {
-        @GET("/feed/geo:{lat};{lng}/?")
-        fun getData(@Path("lat")lat: Double, @Path("lng")lng: Double, @Query("token") token: String): Observable<DataModel>
+        @POST("/session")
+        fun requestLogin(): Observable<LoginModel>
     }
 
     companion object {
-        fun getData(lat: Double, lng: Double, token: String): Observable<DataModel> {
-            return ApiClient.create(ApiImpl::class.java).getData(lat, lng, token)
+        fun requestLogin(): Observable<LoginModel> {
+            return ApiClient.create(ApiImpl::class.java).requestLogin()
         }
     }
 }

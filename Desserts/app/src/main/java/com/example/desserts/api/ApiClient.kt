@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiClient {
     companion object {
-        val API_BASE_URL = "https://api.waqi.info"
+        val API_BASE_URL = "http://ec2-54-180-88-127.ap-northeast-2.compute.amazonaws.com"
 
         private fun retrofit(): Retrofit {
 
