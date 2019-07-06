@@ -26,4 +26,6 @@ class QuestionPageAdapter : FragmentPagerAdapter {
     override fun getCount(): Int {
         return pageList.size
     }
+
+
 }
