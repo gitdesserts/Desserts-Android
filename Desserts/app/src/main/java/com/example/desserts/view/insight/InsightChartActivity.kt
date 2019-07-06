@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.text.Html
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import com.example.desserts.R
@@ -26,7 +27,6 @@ import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.collections.ArrayList
 
 class InsightChartActivity : AppCompatActivity() {
 
@@ -44,11 +44,26 @@ class InsightChartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_insight_chart)
 
-        // set chart
-//        setChart()
-
         requestChartData()
 
+        // Insight
+        compositeDisposable.add(
+            ApiService.requestInsight(1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    insightResultTextView.text = Html.fromHtml(it.content)
+                    GlideApp.with(insightImageView).load(it.img).fitCenter().into(insightImageView)
+
+                }, { error ->
+                    print(error.localizedMessage)
+                })
+        )
+
+        setDatesForMonthlyReport(CalendarDay.today())
+        calendarView.setOnMonthChangedListener { materialCalendarView, calendarDay ->
+            setDatesForMonthlyReport(calendarDay)
+        }
     }
 
     private fun getCurrentDate(): String {
@@ -147,71 +162,56 @@ class InsightChartActivity : AppCompatActivity() {
 
         lineChartWeek.data = combinedData
         lineChartWeek.invalidate()
+    }
 
-        // Insight
-//        Glide.with(this).load("").thumbnail(0.1f).placeholder(R.drawable.loading_spinner).into(holder3.sendImageVIew2);
-//        GlideApp.with(insightImageView).load(userItem.imagePath).fitCenter().placeholder(R.drawable.image_place_holder).into(itemView.selectedUserImageView)
-
-        // Calendar
+    private fun setDatesForMonthlyReport(calendarDay: CalendarDay) {
         val calendar = Calendar.getInstance()
+        year = calendarDay.year
+        month = calendarDay.month
+        calendar.set(year, month - 1, 1)
 
-        calendarView.setOnMonthChangedListener { materialCalendarView, calendarDay ->
-//            calendarView.clearSelection()
-            year = calendarDay.year
-            month = calendarDay.month
-            calendar.set(year, month - 1, 1)
+        val formatted = SimpleDateFormat("yyyy-MM-dd").format(calendar.time)
+        compositeDisposable.add(
+            ApiService.requestMonthData(formatted)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if (year == it.year && month == it.month) {
 
-            val formatted = SimpleDateFormat("yyyy-MM-dd").format(calendar.time)
-            compositeDisposable.add(
-                ApiService.requestMonthData(formatted)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
+                        val days1: MutableList<CalendarDay> = mutableListOf()
+                        val days2: MutableList<CalendarDay> = mutableListOf()
+                        val days3: MutableList<CalendarDay> = mutableListOf()
+                        val days4: MutableList<CalendarDay> = mutableListOf()
 
-
-                        if (year == it.year && month == it.month) {
-//                            for (i in 0 until it.result.size) {
-//                                if (it.result[i] > 0) {
-//
-//                                    calendarView.setDateSelected(CalendarDay.from(year, month, i + 1), true)
-//                                }
-//                            }
-
-                            val days1: MutableList<CalendarDay> = mutableListOf()
-                            val days2: MutableList<CalendarDay> = mutableListOf()
-                            val days3: MutableList<CalendarDay> = mutableListOf()
-                            val days4: MutableList<CalendarDay> = mutableListOf()
-
-                            it.result.forEachIndexed { index, i ->
-                                when (i) {
-                                    0, 1 -> {
-                                        days1.add(CalendarDay.from(year, month, index + 1))
-                                    }
-                                    2, 3, 4 -> {
-                                        days2.add(CalendarDay.from(year, month, index + 1))
-                                    }
-                                    5, 6, 7 -> {
-                                        days3.add(CalendarDay.from(year, month, index + 1))
-                                    }
-                                    8, 9, 10 -> {
-                                        days4.add(CalendarDay.from(year, month, index + 1))
-                                    }
+                        it.result.forEachIndexed { index, i ->
+                            when (i) {
+                                0, 1 -> {
+                                    days1.add(CalendarDay.from(year, month, index + 1))
+                                }
+                                2, 3, 4 -> {
+                                    days2.add(CalendarDay.from(year, month, index + 1))
+                                }
+                                5, 6, 7 -> {
+                                    days3.add(CalendarDay.from(year, month, index + 1))
+                                }
+                                8, 9, 10 -> {
+                                    days4.add(CalendarDay.from(year, month, index + 1))
                                 }
                             }
-
-                            calendarView.addDecorators(
-                                DateDecorator(1, days1, this),
-                                DateDecorator(2, days2, this),
-                                DateDecorator(3, days3, this),
-                                DateDecorator(4, days4, this)
-                            )
                         }
 
-                    }, { error ->
-                        print(error.localizedMessage)
-                    })
-            )
-        }
+                        calendarView.addDecorators(
+                            DateDecorator(1, days1, this),
+                            DateDecorator(2, days2, this),
+                            DateDecorator(3, days3, this),
+                            DateDecorator(4, days4, this)
+                        )
+                    }
+
+                }, { error ->
+                    print(error.localizedMessage)
+                })
+        )
     }
 
     private fun generateLineData(scoreList: ArrayList<Int>): LineData {

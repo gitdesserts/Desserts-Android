@@ -22,6 +22,9 @@ class ApiService {
 
         @GET("/results/month")
         fun requestMonthData(@Query("date") date: String): Observable<MonthModel>
+
+        @GET("/insights")
+        fun requestInsight(@Query("user") user: Int): Observable<InsightModel>
     }
 
     companion object {
@@ -43,6 +46,10 @@ class ApiService {
 
         fun requestMonthData(date: String): Observable<MonthModel> {
             return ApiClient.create(ApiImpl::class.java).requestMonthData(date)
+        }
+
+        fun requestInsight(userId: Int): Observable<InsightModel> {
+            return ApiClient.create(ApiImpl::class.java).requestInsight(user = userId)
         }
     }
 }
