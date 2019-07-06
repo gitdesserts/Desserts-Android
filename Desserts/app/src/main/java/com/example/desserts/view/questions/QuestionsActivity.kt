@@ -1,10 +1,12 @@
 package com.example.desserts.view.questions
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.example.desserts.R
 import com.example.desserts.api.ApiService
 import com.example.desserts.model.QuestionModel
+import com.example.desserts.view.insight.InsightChartActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -92,7 +94,9 @@ class QuestionsActivity: AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     it?.let {
-                        print(it.creator)
+                        val intent = Intent(this, InsightChartActivity::class.java)
+                        intent.putExtra("creator", it.creator)
+                        startActivity(intent)
                     }
                 },{ error ->
                     print(error.localizedMessage)
