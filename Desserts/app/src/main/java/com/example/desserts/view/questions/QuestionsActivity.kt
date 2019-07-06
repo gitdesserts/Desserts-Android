@@ -3,6 +3,7 @@ package com.example.desserts.view.questions
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.example.desserts.R
 import com.example.desserts.api.ApiService
 import com.example.desserts.model.QuestionModel
@@ -11,6 +12,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_questions.*
+import java.util.*
+import kotlin.collections.HashMap
+import com.bumptech.glide.Glide
+import com.example.desserts.common.GlideApp
 
 class QuestionsActivity: AppCompatActivity() {
 
@@ -18,11 +23,24 @@ class QuestionsActivity: AppCompatActivity() {
     private var questionAnswers: MutableList<Map<String, Int>> = mutableListOf()
     private var questionList: MutableList<QuestionModel> = mutableListOf()
 
+    private var timer = Timer()
+
+    inner class CustomTimer: TimerTask() {
+        override fun run() {
+            runOnUiThread {
+                loadingProgressView.visibility = View.GONE
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_questions)
 
         var questionCount = 0
+
+        GlideApp.with(this).load(R.drawable.q_loading).into(loadingImageView)
+        timer.schedule(CustomTimer(), 2500)
 
         compositeDisposable.add(
             ApiService.requestQuestions()

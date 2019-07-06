@@ -8,26 +8,63 @@
         android:background="@color/background"
         tools:context=".view.LoginActivity">
 
-    <ImageView
-            android:id="@+id/logoImageView"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="49.3sp"
+            android:textColor="#ffd4d7"
+            android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="100dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:text="Desserts"
+            android:id="@+id/textView"/>
+
+    <EditText
+            android:id="@+id/idEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:hint="ID"
+            android:textColor="#bfbfbf"
+            android:textColorHint="#bfbfbf"
+            android:backgroundTint="#bfbfbf" android:layout_marginTop="36dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView"/>
+
+    <EditText
+            android:id="@+id/passwordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:textColor="#bfbfbf"
+            android:hint="Password"
+            android:password="true"
+            android:textColorHint="#bfbfbf"
+            android:backgroundTint="#bfbfbf" android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@+id/idEditText"/>
 
     <Button
             android:id="@+id/loginButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
             android:text="@string/login_button_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            android:background="@drawable/shape_2"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/background"
+            android:letterSpacing="-0.05"
+            android:lineSpacingExtra="18sp"
             android:layout_marginBottom="50dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"/>
-
 </android.support.constraint.ConstraintLayout>

@@ -8,11 +8,13 @@ import android.support.constraint.ConstraintLayout
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.text.Html
+import android.view.View
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
+import com.example.desserts.common.GlideApp
 import com.example.desserts.R
 import com.example.desserts.api.ApiService
-import com.example.desserts.common.GlideApp
+
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
@@ -64,7 +66,7 @@ class InsightChartActivity : AppCompatActivity() {
         calendar.time = Date()
 
         requestChartData(getCurrentDate(0))
-
+        GlideApp.with(this).load(R.drawable.q_loading).into(loadingImageView)
         // Insight
         compositeDisposable.add(
             ApiService.requestInsight(1)
@@ -87,6 +89,8 @@ class InsightChartActivity : AppCompatActivity() {
         detailImageButton.setOnClickListener {
             supportFragmentManager.beginTransaction().replace(R.id.frameLayout, MonthlyReportFragment()).commit()
         }
+
+        timer.schedule(CustomTimer(), 2000)
     }
 
     private fun getCurrentDate(intValue: Int): String {
