@@ -12,7 +12,8 @@
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:scrollbars="none">
 
         <RelativeLayout
                 android:layout_width="match_parent"
@@ -35,6 +36,7 @@
                         android:lineSpacingExtra="11sp"/>
 
                 <ImageButton
+                        android:id="@+id/shareButton"
                         android:layout_width="20dp"
                         android:layout_height="25.5dp"
                         android:src="@drawable/share"

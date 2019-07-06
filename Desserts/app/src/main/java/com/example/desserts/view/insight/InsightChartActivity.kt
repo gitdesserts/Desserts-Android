@@ -1,8 +1,11 @@
 package com.example.desserts.view.insight
 
+import android.Manifest
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
+import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.text.Html
 import android.widget.LinearLayout
@@ -40,10 +43,24 @@ class InsightChartActivity : AppCompatActivity() {
     private var lastWeek = false
 
     private val calendar = Calendar.getInstance()
+    private var timer = Timer()
+
+    private var permission = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+    inner class CustomTimer: TimerTask() {
+        override fun run() {
+            runOnUiThread {
+                loadingProgressView.visibility = View.GONE
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_insight_chart)
+
+        ActivityCompat.requestPermissions(this, permission, 7979)
+
         calendar.time = Date()
 
         requestChartData(getCurrentDate(0))
