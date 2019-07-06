@@ -13,7 +13,6 @@ import com.example.desserts.common.GlideApp
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -24,8 +23,6 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_insight_chart.*
 import kotlin.collections.ArrayList
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class InsightChartActivity : AppCompatActivity() {
@@ -40,11 +37,16 @@ class InsightChartActivity : AppCompatActivity() {
     private var year = 0
     private var month = 0
 
+    private var lastWeek = false
+
+    private val calendar = Calendar.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_insight_chart)
+        calendar.time = Date()
 
-        requestChartData()
+        requestChartData(getCurrentDate(0))
 
         // Insight
         compositeDisposable.add(
@@ -66,22 +68,38 @@ class InsightChartActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCurrentDate(): String {
+    private fun getCurrentDate(intValue: Int): String {
         val simpleDateFormatter = SimpleDateFormat("yyyy-MM-dd")
 
-        return simpleDateFormatter.format(Date())
+        calendar.add(Calendar.DATE, intValue)
+
+        return simpleDateFormatter.format(calendar.time)
     }
 
-    private fun requestChartData() {
+    private fun requestChartData(date: String) {
         compositeDisposable.add(
-            ApiService.requestWeekData(getCurrentDate())
+            ApiService.requestWeekData(date)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     weekTextView.text = "${it.month}월 ${convertWeekString(it.week)}"
 
                     setChart(it.result)
-//                    print(it.month)
+
+                    previousWeekButton.setOnClickListener {
+                        requestChartData(getCurrentDate(-7))
+                        lineChartWeek.notifyDataSetChanged()
+
+                        lastWeek = false
+                    }
+
+                    nextWeekButton.setOnClickListener {
+                        if(!lastWeek) {
+                            requestChartData(getCurrentDate(7))
+                            lineChartWeek.notifyDataSetChanged()
+                        }
+                    }
+
                 }, { error ->
                     print(error.localizedMessage)
                 })
@@ -217,7 +235,12 @@ class InsightChartActivity : AppCompatActivity() {
     private fun generateLineData(scoreList: ArrayList<Int>): LineData {
         var entries = ArrayList<Entry>()
         for(i in 6 downTo 0) {
-            entries.add((Entry((6-i).toFloat(), scoreList[i].toFloat())))
+            if(scoreList[i] != -1) {
+                entries.add((Entry((6-i).toFloat(), scoreList[i].toFloat())))
+            }
+            else {
+                lastWeek = true
+            }
         }
 
         var lineDataSet = LineDataSet(entries, "Line DataSet")
@@ -227,7 +250,6 @@ class InsightChartActivity : AppCompatActivity() {
         lineDataSet.circleRadius = 4f
         lineDataSet.circleHoleColor = ContextCompat.getColor(this, R.color.chartLineCircleInnerColor)
         lineDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
-//        lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawValues(false)
 
         var lineData = LineData()
