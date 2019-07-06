@@ -1,10 +1,12 @@
 package com.example.desserts.view
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.desserts.R
 import com.example.desserts.api.ApiService
+import com.example.desserts.view.questions.QuestionsActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -25,16 +27,18 @@ class LoginActivity : AppCompatActivity() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe {
                         it?.let {
-                            if (it.permission) {
-                                // todo -> next activity
-                                Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
-                            }
-                            else {
-                                // todo -> 예외
-                                Toast.makeText(this, "fail", Toast.LENGTH_SHORT).show()
-                            }
+                            loadQuestions(it.permission)
                         }
                     })
+        }
+    }
+
+    private fun loadQuestions(isPermitted: Boolean) {
+        if (isPermitted) {
+            val intent = Intent(this, QuestionsActivity::class.java)
+            startActivity(intent)
+        } else {
+            Toast.makeText(this, "fail", Toast.LENGTH_SHORT).show()
         }
     }
 }

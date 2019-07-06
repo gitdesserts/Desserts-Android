@@ -15,8 +15,10 @@ class QuestionFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            questionText = arguments!!.getString(QUESTION_TITLE)
+        arguments?.let {
+            it.getString(QUESTION_TITLE)?.let { title ->
+                questionText = title
+            }
         }
     }
 

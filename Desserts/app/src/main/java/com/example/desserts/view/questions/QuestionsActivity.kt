@@ -13,5 +13,22 @@ class QuestionsActivity: AppCompatActivity() {
 
         val adapter = QuestionPageAdapter(supportFragmentManager, listOf("First", "Second", "Third"))
         questionViewPager.adapter = adapter
+
+        // 페이저 스크롤 막기
+        questionViewPager.setOnTouchListener { view, motionEvent ->
+            return@setOnTouchListener true
+        }
+
+        yesButton.setOnClickListener {
+            questionViewPager.currentItem = 2
+        }
+
+        noButton.setOnClickListener {
+
+        }
+
+        skipButton.setOnClickListener {
+
+        }
     }
 }
