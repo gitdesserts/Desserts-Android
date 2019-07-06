@@ -5,25 +5,115 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background"
         tools:context=".view.insight.InsightChartActivity">
 
-    <TextView
-            android:id="@+id/insightResultTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="insight text"
+    <ScrollView
+            android:id="@+id/containerScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:fillViewport="true"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="50dp"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <com.github.mikephil.charting.charts.CombinedChart
-            android:id="@+id/lineChartWeek"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            app:layout_constraintTop_toBottomOf="@+id/insightResultTextView"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="100dp"/>
+        <LinearLayout
+                android:id="@+id/containerLayout"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+            <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="224dp">
+
+                <TextView
+                        android:id="@+id/feelingTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="저번 주에 비해 조금 우울해 보여요"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="46dp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:textSize="15sp"
+                        android:textColor="#828282"
+                        android:letterSpacing="-0.05"
+                        android:lineSpacingExtra="21sp"
+                />
+
+                <TextView
+                        android:id="@+id/insightResultTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="달달한 디저트 어때요?"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/feelingTextView"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:textSize="20sp"
+                        android:textColor="#bfbfbf"
+                        android:letterSpacing="-0.05"
+                        android:lineSpacingExtra="20sp"
+                />
+
+                <ImageView android:layout_width="80dp"
+                           android:layout_height="80dp"
+                           app:layout_constraintEnd_toEndOf="@+id/feelingTextView"
+                           app:layout_constraintBottom_toBottomOf="parent"
+                           android:layout_marginRight="36dp"
+                           android:layout_marginBottom="30dp" />
+            </android.support.constraint.ConstraintLayout>
+
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="주간 그래프"
+                      android:textSize="18sp"
+                      android:textColor="#bfbfbf"
+                      android:letterSpacing="-0.05"
+                      android:paddingLeft="24dp"
+                      android:paddingTop="40dp"
+                      android:paddingBottom="24dp"
+                      android:lineSpacingExtra="18sp"/>
+
+            <com.github.mikephil.charting.charts.CombinedChart
+                    android:id="@+id/lineChartWeek"
+                    android:layout_width="250dp"
+                    android:layout_height="200dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    app:layout_constraintTop_toBottomOf="@+id/insightResultTextView"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    />
+
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="월간 그래프"
+                      android:textSize="18sp"
+                      android:textColor="#bfbfbf"
+                      android:letterSpacing="-0.05"
+                      android:paddingLeft="24dp"
+                      android:paddingTop="40dp"
+                      android:paddingBottom="24dp"
+                      android:lineSpacingExtra="18sp"/>
+
+            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                    android:id="@+id/calendarView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+        </LinearLayout>
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>
