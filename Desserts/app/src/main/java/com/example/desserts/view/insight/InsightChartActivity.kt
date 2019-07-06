@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.text.Html
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import com.example.desserts.R
@@ -43,11 +44,26 @@ class InsightChartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_insight_chart)
 
-        // set chart
-//        setChart()
-
         requestChartData()
 
+        // Insight
+        compositeDisposable.add(
+            ApiService.requestInsight(1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    insightResultTextView.text = Html.fromHtml(it.content)
+                    GlideApp.with(insightImageView).load(it.img).fitCenter().into(insightImageView)
+
+                }, { error ->
+                    print(error.localizedMessage)
+                })
+        )
+
+        setDatesForMonthlyReport(CalendarDay.today())
+        calendarView.setOnMonthChangedListener { materialCalendarView, calendarDay ->
+            setDatesForMonthlyReport(calendarDay)
+        }
     }
 
     private fun getCurrentDate(): String {
@@ -146,19 +162,6 @@ class InsightChartActivity : AppCompatActivity() {
 
         lineChartWeek.data = combinedData
         lineChartWeek.invalidate()
-
-        // Insight
-//        Glide.with(this).load("").thumbnail(0.1f).placeholder(R.drawable.loading_spinner).into(holder3.sendImageVIew2);
-//        GlideApp.with(insightImageView).load(userItem.imagePath).fitCenter().placeholder(R.drawable.image_place_holder).into(itemView.selectedUserImageView)
-
-        // Calendar
-
-
-        setDatesForMonthlyReport(CalendarDay.today())
-        calendarView.setOnMonthChangedListener { materialCalendarView, calendarDay ->
-//            calendarView.clearSelection()
-            setDatesForMonthlyReport(calendarDay)
-        }
     }
 
     private fun setDatesForMonthlyReport(calendarDay: CalendarDay) {
