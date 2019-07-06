@@ -60,4 +60,24 @@
             android:lineSpacingExtra="21sp"
             android:text="@string/skip_button"/>
 
+    <LinearLayout
+            android:id="@+id/loadingProgressView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#4D000000"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center">
+
+        <ImageView
+                android:id="@+id/loadingImageView"
+                android:layout_width="174dp"
+                android:layout_height="174dp"
+                android:layout_gravity="center"
+                android:padding="12dp"
+                android:background="@drawable/loading_circle"
+        />
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
