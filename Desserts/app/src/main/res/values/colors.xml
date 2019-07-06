@@ -6,4 +6,12 @@
 
     <color name="background">#1c223a</color>
     <color name="backgroundInsightCard">#212a4c</color>
+
+    <!-- chart -->
+    <color name="chartTextColor">#5d5d5d</color>
+    <color name="chartGridColor">#5d5d5d</color>
+    <color name="chartBarColor">#ffd4d7</color>
+    <color name="chartLineColor">#e8ecef</color>
+    <color name="chartLineCircleForegroundColor">#e8ecef</color>
+    <color name="chartLineCircleInnerColor">#1c223a</color>
 </resources>

@@ -5,7 +5,6 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
         tools:context=".view.insight.InsightChartActivity">
 
     <ScrollView
@@ -24,7 +23,8 @@
                 android:id="@+id/containerLayout"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/background">
 
             <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
@@ -85,16 +85,43 @@
                       android:paddingBottom="24dp"
                       android:lineSpacingExtra="18sp"/>
 
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                <Button
+                        android:id="@+id/previousWeekButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/weekTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        tools:text="7월 셋째주"
+                        android:textColor="@color/chartTextColor"/>
+
+                <Button
+                        android:id="@+id/nextWeekButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
             <com.github.mikephil.charting.charts.CombinedChart
                     android:id="@+id/lineChartWeek"
-                    android:layout_width="250dp"
-                    android:layout_height="200dp"
+                    android:layout_width="311.5dp"
+                    android:layout_height="292.5dp"
                     android:layout_marginLeft="24dp"
                     android:layout_marginRight="24dp"
+                    android:layout_gravity="center"
                     app:layout_constraintTop_toBottomOf="@+id/insightResultTextView"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    />
+                    app:layout_constraintRight_toRightOf="parent"/>
 
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
