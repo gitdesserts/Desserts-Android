@@ -90,10 +90,12 @@
                     android:orientation="horizontal"
                     android:gravity="center">
 
-                <Button
+                <ImageButton
                         android:id="@+id/previousWeekButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/arrow_left"
+                        android:background="@android:color/transparent"/>
 
                 <TextView
                         android:id="@+id/weekTextView"
@@ -104,10 +106,12 @@
                         tools:text="7월 셋째주"
                         android:textColor="@color/chartTextColor"/>
 
-                <Button
+                <ImageButton
                         android:id="@+id/nextWeekButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/arrow_right"
+                        android:background="@android:color/transparent"/>
 
             </LinearLayout>
 

@@ -5,23 +5,22 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.widget.LinearLayout
+import com.bumptech.glide.Glide
 import com.example.desserts.R
 import com.example.desserts.api.ApiService
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import com.prolificinteractive.materialcalendarview.CalendarDay
+import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_insight_chart.*
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.collections.ArrayList
 
 class InsightChartActivity : AppCompatActivity() {
 
@@ -33,33 +32,52 @@ class InsightChartActivity : AppCompatActivity() {
 
     private val compositeDisposable = CompositeDisposable()
 
+    private var lastWeek = false
+
+    private val calendar = Calendar.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_insight_chart)
 
-        // set chart
-//        setChart()
+        calendar.time = Date()
 
-        requestChartData()
+        requestChartData(getCurrentDate(0))
 
     }
 
-    private fun getCurrentDate(): String {
+    private fun getCurrentDate(intValue: Int): String {
         val simpleDateFormatter = SimpleDateFormat("yyyy-MM-dd")
 
-        return simpleDateFormatter.format(Date())
+        calendar.add(Calendar.DATE, intValue)
+
+        return simpleDateFormatter.format(calendar.time)
     }
 
-    private fun requestChartData() {
+    private fun requestChartData(date: String) {
         compositeDisposable.add(
-            ApiService.requestWeekData(getCurrentDate())
+            ApiService.requestWeekData(date)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     weekTextView.text = "${it.month}월 ${convertWeekString(it.week)}"
 
                     setChart(it.result)
-//                    print(it.month)
+
+                    previousWeekButton.setOnClickListener {
+                        requestChartData(getCurrentDate(-7))
+                        lineChartWeek.notifyDataSetChanged()
+
+                        lastWeek = false
+                    }
+
+                    nextWeekButton.setOnClickListener {
+                        if(!lastWeek) {
+                            requestChartData(getCurrentDate(7))
+                            lineChartWeek.notifyDataSetChanged()
+                        }
+                    }
+
                 }, { error ->
                     print(error.localizedMessage)
                 })
@@ -141,12 +159,75 @@ class InsightChartActivity : AppCompatActivity() {
         lineChartWeek.data = combinedData
         lineChartWeek.invalidate()
 
+        // Insight
+//        Glide.with(this).load("").thumbnail(0.1f).placeholder(R.drawable.loading_spinner).into(holder3.sendImageVIew2);
+//        GlideApp.with(insightImageView).load(userItem.imagePath).fitCenter().placeholder(R.drawable.image_place_holder).into(itemView.selectedUserImageView)
+
+        // Calendar
+        val calendar = Calendar.getInstance()
+
+        calendarView.setOnMonthChangedListener { materialCalendarView, calendarDay ->
+//            calendarView.clearSelection()
+            year = calendarDay.year
+            month = calendarDay.month
+            calendar.set(year, month - 1, 1)
+
+            val formatted = SimpleDateFormat("yyyy-MM-dd").format(calendar.time)
+            compositeDisposable.add(
+                ApiService.requestMonthData(formatted)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+
+
+                        if (year == it.year && month == it.month) {
+
+                            val days1: MutableList<CalendarDay> = mutableListOf()
+                            val days2: MutableList<CalendarDay> = mutableListOf()
+                            val days3: MutableList<CalendarDay> = mutableListOf()
+                            val days4: MutableList<CalendarDay> = mutableListOf()
+
+                            it.result.forEachIndexed { index, i ->
+                                when (i) {
+                                    0, 1 -> {
+                                        days1.add(CalendarDay.from(year, month, index + 1))
+                                    }
+                                    2, 3, 4 -> {
+                                        days2.add(CalendarDay.from(year, month, index + 1))
+                                    }
+                                    5, 6, 7 -> {
+                                        days3.add(CalendarDay.from(year, month, index + 1))
+                                    }
+                                    8, 9, 10 -> {
+                                        days4.add(CalendarDay.from(year, month, index + 1))
+                                    }
+                                }
+                            }
+
+                            calendarView.addDecorators(
+                                DateDecorator(1, days1, this),
+                                DateDecorator(2, days2, this),
+                                DateDecorator(3, days3, this),
+                                DateDecorator(4, days4, this)
+                            )
+                        }
+
+                    }, { error ->
+                        print(error.localizedMessage)
+                    })
+            )
+        }
     }
 
     private fun generateLineData(scoreList: ArrayList<Int>): LineData {
         var entries = ArrayList<Entry>()
         for(i in 6 downTo 0) {
-            entries.add((Entry((6-i).toFloat(), scoreList[i].toFloat())))
+            if(scoreList[i] != -1) {
+                entries.add((Entry((6-i).toFloat(), scoreList[i].toFloat())))
+            }
+            else {
+                lastWeek = true
+            }
         }
 
         var lineDataSet = LineDataSet(entries, "Line DataSet")
@@ -156,7 +237,6 @@ class InsightChartActivity : AppCompatActivity() {
         lineDataSet.circleRadius = 4f
         lineDataSet.circleHoleColor = ContextCompat.getColor(this, R.color.chartLineCircleInnerColor)
         lineDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
-//        lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawValues(false)
 
         var lineData = LineData()
