@@ -78,6 +78,9 @@ class InsightChartActivity : AppCompatActivity() {
             setDatesForMonthlyReport(calendarDay)
         }
 
+        detailImageButton.setOnClickListener {
+            supportFragmentManager.beginTransaction().replace(R.id.frameLayout, MonthlyReportFragment()).commit()
+        }
 
         timer.schedule(CustomTimer(), 2000)
     }

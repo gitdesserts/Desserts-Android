@@ -14,4 +14,6 @@
     <color name="chartLineColor">#e8ecef</color>
     <color name="chartLineCircleForegroundColor">#e8ecef</color>
     <color name="chartLineCircleInnerColor">#1c223a</color>
+
+    <color name="chartLineMonthlyReportCircle">#ed489a</color>
 </resources>
