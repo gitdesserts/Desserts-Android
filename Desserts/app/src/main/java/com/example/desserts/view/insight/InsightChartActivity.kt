@@ -9,9 +9,10 @@ import android.text.Html
 import android.view.View
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
+import com.example.desserts.common.GlideApp
 import com.example.desserts.R
 import com.example.desserts.api.ApiService
-import com.example.desserts.common.GlideApp
+
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
@@ -58,7 +59,7 @@ class InsightChartActivity : AppCompatActivity() {
         calendar.time = Date()
 
         requestChartData(getCurrentDate(0))
-
+        GlideApp.with(this).load(R.drawable.q_loading).into(loadingImageView)
         // Insight
         compositeDisposable.add(
             ApiService.requestInsight(1)

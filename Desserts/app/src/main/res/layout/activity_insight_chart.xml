@@ -188,6 +188,8 @@
                     android:layout_width="174dp"
                     android:layout_height="174dp"
                     android:layout_gravity="center"
+                    android:padding="12dp"
+                    android:background="@drawable/loading_circle"
             />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
