@@ -3,8 +3,10 @@ package com.example.desserts.view.insight
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.support.v4.content.ContextCompat
 import android.text.Html
+import android.view.View
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import com.example.desserts.R
@@ -40,6 +42,15 @@ class InsightChartActivity : AppCompatActivity() {
     private var lastWeek = false
 
     private val calendar = Calendar.getInstance()
+    private var timer = Timer()
+
+    inner class CustomTimer: TimerTask() {
+        override fun run() {
+            runOnUiThread {
+                loadingProgressView.visibility = View.GONE
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +77,9 @@ class InsightChartActivity : AppCompatActivity() {
         calendarView.setOnMonthChangedListener { materialCalendarView, calendarDay ->
             setDatesForMonthlyReport(calendarDay)
         }
+
+
+        timer.schedule(CustomTimer(), 2000)
     }
 
     private fun getCurrentDate(intValue: Int): String {

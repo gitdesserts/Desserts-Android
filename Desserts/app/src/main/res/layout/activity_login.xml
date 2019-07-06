@@ -8,24 +8,33 @@
         android:background="@color/background"
         tools:context=".view.LoginActivity">
 
-    <ImageView
-            android:id="@+id/logoImageView"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="49.3sp"
+            android:textColor="#ffd4d7"
+            android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="100dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:text="Desserts"
+    />
 
     <Button
             android:id="@+id/loginButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
             android:text="@string/login_button_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            android:background="@drawable/shape_2"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/background"
+            android:letterSpacing="-0.05"
+            android:lineSpacingExtra="18sp"
             android:layout_marginBottom="50dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"/>
