@@ -3,6 +3,7 @@ package com.example.desserts.view.insight
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.LinearLayout
 import com.example.desserts.R
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -50,6 +51,10 @@ class InsightChartActivity : AppCompatActivity() {
 
         lineChartWeek.data = combinedData
         lineChartWeek.invalidate()
+
+
+        // Calendar
+//        calendarView.calendarOrientation = LinearLayout.HORIZONTAL
     }
 
     private fun generateLineData(): LineData {
@@ -115,4 +120,6 @@ class InsightChartActivity : AppCompatActivity() {
 
         return xAxis
     }
+
+
 }
