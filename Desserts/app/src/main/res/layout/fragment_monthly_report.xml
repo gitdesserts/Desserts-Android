@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.insight.MonthlyReportFragment"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:background="#e8ecef">
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <RelativeLayout
+                    android:id="@+id/layout_first"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="39dp"
+                    android:layout_marginBottom="28.5dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="월간리포트"
+                        android:textSize="25sp"
+                        android:textColor="#1c223a"
+                        android:letterSpacing="-0.05"
+                        android:lineSpacingExtra="11sp"/>
+
+                <ImageButton
+                        android:layout_width="20dp"
+                        android:layout_height="25.5dp"
+                        android:src="@drawable/share"
+                        android:background="@android:color/transparent"
+                        android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/layout_second"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layout_first">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="D"
+                        android:textSize="29.3sp"
+                        android:textColor="#1c223a"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="홍길동님의 Monthly Report"
+                        android:textSize="14sp"
+                        android:textColor="#1c223a"
+                        android:letterSpacing="-0.05"
+                        android:lineSpacingExtra="22sp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layout_second"
+                    android:layout_marginTop="100dp">
+
+                <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/line1"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"/>
+                <TextView
+                        android:id="@+id/weekTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="aaaaaaaaaa"
+                        android:textColor="#bfbfbf"
+                        android:textSize="14sp"
+                        android:layout_alignBottom="@+id/line1"
+                        android:paddingLeft="5dp"
+                        android:paddingBottom="5dp"/>
+
+                <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/line2"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_below="@+id/line1"
+                        android:layout_marginTop="25dp"/>
+                <TextView
+                        android:id="@+id/weekTextView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="aaaaaaaaaa"
+                        android:textColor="#bfbfbf"
+                        android:textSize="14sp"
+                        android:layout_alignBottom="@+id/line2"
+                        android:paddingLeft="5dp"
+                        android:paddingBottom="5dp"/>
+
+                <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/line3"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_below="@+id/line2"
+                        android:layout_marginTop="25dp"/>
+                <TextView
+                        android:id="@+id/weekTextView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="aaaaaaaaaa"
+                        android:textColor="#bfbfbf"
+                        android:textSize="14sp"
+                        android:layout_alignBottom="@+id/line3"
+                        android:paddingLeft="5dp"
+                        android:paddingBottom="5dp"/>
+
+                <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/line4"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_below="@+id/line3"
+                        android:layout_marginTop="25dp"/>
+                <TextView
+                        android:id="@+id/weekTextView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="aaaaaaaaaa"
+                        android:textColor="#bfbfbf"
+                        android:textSize="14sp"
+                        android:layout_alignBottom="@+id/line4"
+                        android:paddingLeft="5dp"
+                        android:paddingBottom="5dp"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

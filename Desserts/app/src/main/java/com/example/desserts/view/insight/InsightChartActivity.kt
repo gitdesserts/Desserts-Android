@@ -66,6 +66,10 @@ class InsightChartActivity : AppCompatActivity() {
         calendarView.setOnMonthChangedListener { materialCalendarView, calendarDay ->
             setDatesForMonthlyReport(calendarDay)
         }
+
+        detailImageButton.setOnClickListener {
+            supportFragmentManager.beginTransaction().replace(R.id.frameLayout, MonthlyReportFragment()).commit()
+        }
     }
 
     private fun getCurrentDate(intValue: Int): String {
