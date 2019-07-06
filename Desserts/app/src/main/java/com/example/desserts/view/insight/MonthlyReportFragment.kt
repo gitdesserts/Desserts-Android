@@ -1,6 +1,7 @@
 package com.example.desserts.view.insight
 
 
+import android.Manifest
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
@@ -25,6 +26,19 @@ import kotlinx.android.synthetic.main.fragment_monthly_report.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import android.graphics.Bitmap
+import android.os.Environment.getExternalStorageDirectory
+import android.content.Intent
+import android.graphics.Canvas
+import android.net.Uri
+import android.os.Environment
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.FileProvider
+import android.view.ViewTreeObserver
+import java.io.File
+import java.io.FileOutputStream
+import java.lang.Exception
+
 
 /**
  * A simple [Fragment] subclass.
@@ -39,6 +53,10 @@ class MonthlyReportFragment : Fragment() {
     private var xAxisData = arrayOf("월", "화", "수", "목", "금", "토", "일")
 
     private val calendar = Calendar.getInstance()
+
+    private var b: Bitmap? = null
+
+    private var uri: Uri? = null
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -58,6 +76,14 @@ class MonthlyReportFragment : Fragment() {
         setLine2(getCurrentDate(-7))
         setLine3(getCurrentDate(-7))
         setLine4(getCurrentDate(-7))
+
+        shareButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.setType("image/png")
+            intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(uri.toString()))
+            intent.setPackage("com.kakao.talk")
+            startActivity(intent)
+        }
 
     }
 
@@ -116,6 +142,33 @@ class MonthlyReportFragment : Fragment() {
                     line1.legend.isEnabled = false
                     line1.setBackgroundResource(R.drawable.gradient)
                     line1.alpha = 0.5f
+
+                    line1.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+                        override fun onGlobalLayout() {
+                            line1.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                            var b = Bitmap.createBitmap(line1.measuredWidth, line1.measuredHeight, Bitmap.Config.ARGB_8888)
+
+                            var c = Canvas(b)
+                            line1.layout(line1.left, line1.top, line1.right, line1.bottom)
+                            line1.draw(c)
+
+                            var fileName = "chartImage.png"
+                            var sd = Environment.getExternalStorageDirectory()
+                            var dest = File(sd, fileName)
+
+                            try {
+                                var out = FileOutputStream(dest)
+                                b.compress(Bitmap.CompressFormat.PNG, 90, out)
+                                out.flush()
+                                out.close()
+
+                                uri = FileProvider.getUriForFile(mContext!!.applicationContext, mContext!!.applicationContext.packageName + ".provider", dest)
+                            }
+                            catch (e: Exception) {
+                                e.printStackTrace()
+                            }
+                        }
+                    })
 
                     line1.data = lineData1
                     line1.invalidate()
