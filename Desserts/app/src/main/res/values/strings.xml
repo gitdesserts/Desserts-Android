@@ -4,6 +4,5 @@
     <!-- Login Activity -->
     <string name="login_button_text">로그인</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="skip_button"><u>Skip</u></string>
 </resources>
