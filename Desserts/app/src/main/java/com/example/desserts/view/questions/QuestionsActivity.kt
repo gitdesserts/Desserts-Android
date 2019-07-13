@@ -1,7 +1,7 @@
 package com.example.desserts.view.questions
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.example.desserts.R
@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.activity_questions.*
 import java.util.*
 import kotlin.collections.HashMap
 import com.bumptech.glide.Glide
-import com.example.desserts.common.GlideApp
 
 class QuestionsActivity: AppCompatActivity() {
 
@@ -39,7 +38,7 @@ class QuestionsActivity: AppCompatActivity() {
 
         var questionCount = 0
 
-        GlideApp.with(this).load(R.drawable.q_loading).into(loadingImageView)
+        Glide.with(this).load(R.drawable.q_loading).into(loadingImageView)
         timer.schedule(CustomTimer(), 2500)
 
         compositeDisposable.add(

@@ -5,8 +5,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.insight.MonthlyReportFragment"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
         android:background="#e8ecef">
 
     <ScrollView
@@ -16,6 +14,8 @@
             android:scrollbars="none">
 
         <RelativeLayout
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -61,7 +61,7 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="홍길동님의 Monthly Report"
+                        android:text="yerang12님의 Monthly Report"
                         android:textSize="14sp"
                         android:textColor="#1c223a"
                         android:letterSpacing="-0.05"

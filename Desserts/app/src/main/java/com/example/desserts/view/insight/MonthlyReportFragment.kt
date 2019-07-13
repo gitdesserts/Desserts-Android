@@ -5,8 +5,8 @@ import android.Manifest
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,8 +32,8 @@ import android.content.Intent
 import android.graphics.Canvas
 import android.net.Uri
 import android.os.Environment
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.FileProvider
+import androidx.core.app.ActivityCompat
+import androidx.core.content.FileProvider
 import android.view.ViewTreeObserver
 import java.io.File
 import java.io.FileOutputStream
@@ -44,7 +44,7 @@ import java.lang.Exception
  * A simple [Fragment] subclass.
  *
  */
-class MonthlyReportFragment : Fragment() {
+class MonthlyReportFragment : androidx.fragment.app.Fragment() {
 
     private var mContext: Context? = null
 

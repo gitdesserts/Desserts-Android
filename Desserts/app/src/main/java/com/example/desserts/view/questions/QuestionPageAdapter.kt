@@ -1,16 +1,16 @@
 package com.example.desserts.view.questions
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import com.example.desserts.model.QuestionModel
 import com.example.desserts.view.BaseFragment
 
-class QuestionPageAdapter : FragmentPagerAdapter {
+class QuestionPageAdapter : androidx.fragment.app.FragmentPagerAdapter {
 
     private val pageList: MutableList<BaseFragment> = mutableListOf()
 
-    constructor(fragmentManager: FragmentManager, list: List<QuestionModel>) : super(fragmentManager) {
+    constructor(fragmentManager: androidx.fragment.app.FragmentManager, list: List<QuestionModel>) : super(fragmentManager) {
         for (i in 0 until list.size) {
             pageList.add(QuestionFragment.newInstance(list[i].content))
         }
@@ -20,7 +20,7 @@ class QuestionPageAdapter : FragmentPagerAdapter {
         return pageList[position].title()
     }
 
-    override fun getItem(position: Int): Fragment {
+    override fun getItem(position: Int): androidx.fragment.app.Fragment {
         return pageList.get(position)
     }
 

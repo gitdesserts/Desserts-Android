@@ -1,7 +1,7 @@
 package com.example.desserts.view
 
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment : androidx.fragment.app.Fragment() {
     abstract fun title(): String
 }

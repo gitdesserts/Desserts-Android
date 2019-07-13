@@ -2,16 +2,21 @@ package com.example.desserts.view.insight
 
 import android.Manifest
 import android.graphics.Color
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import android.text.Html
 import android.view.View
 import android.widget.LinearLayout
+import com.afollestad.materialdialogs.LayoutMode
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.bottomsheets.BottomSheet
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
 import com.bumptech.glide.Glide
-import com.example.desserts.common.GlideApp
+//import com.example.desserts.common.GlideApp
 import com.example.desserts.R
 import com.example.desserts.api.ApiService
 
@@ -26,6 +31,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_insight_chart.*
+import kotlinx.android.synthetic.main.view_test.view.*
 import kotlin.collections.ArrayList
 import java.text.SimpleDateFormat
 import java.util.*
@@ -66,7 +72,7 @@ class InsightChartActivity : AppCompatActivity() {
         calendar.time = Date()
 
         requestChartData(getCurrentDate(0))
-        GlideApp.with(this).load(R.drawable.q_loading).into(loadingImageView)
+        Glide.with(this).load(R.drawable.q_loading).into(loadingImageView)
         // Insight
         compositeDisposable.add(
             ApiService.requestInsight(1)
@@ -74,7 +80,7 @@ class InsightChartActivity : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     insightResultTextView.text = Html.fromHtml(it.content)
-                    GlideApp.with(insightImageView).load(it.img).fitCenter().into(insightImageView)
+                    Glide.with(insightImageView).load(it.img).into(insightImageView)
 
                 }, { error ->
                     print(error.localizedMessage)
@@ -88,6 +94,9 @@ class InsightChartActivity : AppCompatActivity() {
 
         detailImageButton.setOnClickListener {
             supportFragmentManager.beginTransaction().replace(R.id.frameLayout, MonthlyReportFragment()).commit()
+            timer = Timer()
+            loadingProgressView.visibility = View.VISIBLE
+            timer.schedule(CustomTimer(), 2000)
         }
 
         timer.schedule(CustomTimer(), 2000)
